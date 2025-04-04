@@ -1,0 +1,323 @@
+<html>
+<head>
+  <title>Colapsar Tabelas com Animação</title>
+  <style>
+    .container-botoes 
+    {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    .container-tabela 
+    {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.5s ease;
+      background-color: #f9f9f9;
+      padding: 0 15px;
+      border-radius: 10px;
+    }
+    .container-tabela.mostrar 
+    {
+      max-height: 500px; /* Altura suficiente para o conteúdo */
+      padding: 15px;
+      overflow-y: auto
+    }
+    table 
+    {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      table-layout: fixed; /* Define largura fixa para as colunas */
+      background-image: linear-gradient(90deg, #e1efe9, #e1efe9);
+    }
+    th, td 
+    {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+      word-wrap: break-word; /* Garante que o texto quebre quando necessário */
+    }
+    th 
+    {
+      background-color: #f2f2f2;
+    }
+    button 
+    {
+      padding: 10px 20px;
+      border: 1px solid #ddd;
+      background-image: linear-gradient(90deg, #e1efe9, #e1efe9);
+      cursor: pointer;
+      font-family: verdana; 
+      color: #00a335; 
+      font-size: 120%;
+      border-radius: 10px;
+      width: 200px;
+    }
+    button:hover 
+    {
+      background-color: #e9e9e9;
+    }
+    .titulo-tabela {
+      width: 99%;
+      padding: 10px 2px;
+      background-image: linear-gradient(90deg, #e1efe9, #e1efe9);
+      color: #00a335;
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+      font-size: 140%;
+      text-align: center;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Título acima dos botões -->
+  <div class="titulo-tabela">
+    <div>IPs do Lab</div>
+  </div>
+
+  <!-- Botões -->
+  <div class="container-botoes">
+    <button onclick="alternarTabela('tabela1')">Bio-T</button>
+    <button onclick="alternarTabela('tabela2')">Softwares</button>
+    <button onclick="alternarTabela('tabela3')">Linha ZK</button>
+    <button onclick="alternarTabela('tabela4')">XPE/TVIP</button>
+  </div>
+
+  <!-- Tabela 1 -->
+  <div id="tabela1" class="container-tabela">
+    <table>
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th>Link</th>
+          <th>IP</th>
+          <th>Login/Senha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SS 5542 MF W</td>
+          <td><a href="http://10.1.44.66">Web Service</a></td>
+          <td>10.1.44.66</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 5532 MF W</td>
+          <td><a href="http://10.1.44.65">Web Service</a></td>
+          <td>10.1.44.65</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 5541 MF W</td>
+          <td><a href="http://10.1.44.64">Web Service</a></td>
+          <td>10.1.44.64</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 5531 MF W</td>
+          <td><a href="http://10.1.44.63">Web Service</a></td>
+          <td>10.1.44.63</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 3542 MF W</td>
+          <td><a href="http://10.1.44.62">Web Service</a></td>
+          <td>10.1.44.61</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 3532 MF W</td>
+          <td><a href="http://10.1.44.61">Web Service</a></td>
+          <td>192.168.0.1</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 1540 MF W</td>
+          <td><a href="http://10.1.44.60">Web Service</a></td>
+          <td>10.1.44.60</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 5530 MF Face</td>
+          <td><a href="http://10.1.44.56">Web Service</a></td>
+          <td>10.1.44.56</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 3540 MF Face Bio</td>
+          <td><a href="http://10.1.44.70">Web Service</a></td>
+          <td>10.1.44.70</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 3540 MF Face</td>
+          <td><a href="http://10.1.44.55">Web Service</a></td>
+          <td>10.1.44.55</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 3530 MF Face W</td>
+          <td><a href="http://10.1.44.54">Web Service</a></td>
+          <td>10.1.44.54</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 3430 Bio</td>
+          <td><a href="http://10.1.44.53">Web Service</a></td>
+          <td>10.1.44.53</td>
+          <td>Login: admin / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>SS 3420 Bio</td>
+          <td><a>'''Não possui Interface Web'''</a></td>
+          <td>10.1.44.52</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>CT 3000 2PB</td>
+          <td><a>'''Não possui Interface Web'''</a></td>
+          <td>10.1.44.51</td>
+          <td> </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tabela 2 -->
+  <div id="tabela2" class="container-tabela">
+    <table>
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th>Link</th>
+          <th>IP</th>
+          <th>Login/Senha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Defense Lite</td>
+          <td><a>Sem interface via navegador</a></td>
+          <td>10.1.44.100</td>
+          <td>Login: system / Senha: intelbras1</td>
+        </tr>
+        <tr>
+          <td>InControl</td>
+          <td><a href="https://10.1.44.100:4445">Servidor</a></td>
+          <td>10.1.44.100:4442 / :4445</td>
+          <td>Login: analista / Senha: intelbras1</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tabela 3 -->
+  <div id="tabela3" class="container-tabela">
+    <table>
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th>Link</th>
+          <th>IP</th>
+          <th>Login/Senha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SS 420</td>
+          <td><a>'''Não possui Interface Web'''</a></td>
+          <td>10.1.44.46</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>SS 311 MF</td>
+          <td><a>'''Não possui Interface Web'''</a></td>
+          <td>10.1.44.45</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>SS 411E</td>
+          <td><a>'''Não possui Interface Web'''</a></td>
+          <td>10.1.44.44</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>SS 320 MF</td>
+          <td><a>'''Não possui Interface Web'''</a></td>
+          <td>10.1.44.43</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>CT 500 1P</td>
+          <td><a>'''Não possui Interface Web'''</a></td>
+          <td>10.1.44.42</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>CT 500 2PB</td>
+          <td><a>'''Não possui Interface Web'''</a></td>
+          <td>10.1.44.41</td>
+          <td> </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+    <!-- Tabela 4 -->
+    <div id="tabela4" class="container-tabela">
+      <table>
+        <thead>
+          <tr>
+            <th>Modelo</th>
+            <th>Link</th>
+            <th>IP</th>
+            <th>Login/Senha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TVIP 3000 UN</td>
+            <td><a href="http://10.1.44.82">Interface Web</a></td>
+            <td>10.1.44.82</td>
+            <td>Login: admin / Senha Web: admin / Senha: 123456</td>
+          </tr>
+          <tr>
+            <td>XPE 3101 T IP</td>
+            <td><a href="http://10.1.44.84">Interface Web</a></td>
+            <td>10.1.44.84</td>
+            <td>Login: admin / Senha: admin</td>
+          </tr>
+          <tr>
+            <td>XPE 3200 PLUS IP</td>
+            <td><a href="http://10.1.44.83">Interface Web</a></td>
+            <td>10.1.44.83</td>
+            <td>Login: admin / Senha: admin</td>
+          </tr>
+          <tr>
+            <td>XPE 3200 IP FACE</td>
+            <td><a href="http://10.1.44.83">Interface Web</a></td>
+            <td>10.1.44.83</td>
+            <td>Login: admin / Senha: admin</td>
+          </tr>
+          <tr>
+            <td>XPE 3115 IP</td>
+            <td><a href="http://10.1.44.81">Interface Web</a></td>
+            <td>10.1.44.81</td>
+            <td>Login: analista / Senha: admin</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  <script>
+    function alternarTabela(idTabela) 
+    {
+      const tabela = document.getElementById(idTabela);
+      tabela.classList.toggle('mostrar'); // Alterna a classe 'mostrar' para animar
+    }
+  </script>
+</body>
+</html>
