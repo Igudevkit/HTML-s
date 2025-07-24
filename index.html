@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Porta Deslizante</title>
+  <style>
+    :root {
+      --cor-fundo: #0d1f17;
+      --cor-painel: #1b3328;
+      --cor-texto: #e0f2e9;
+      --cor-verde: #4caf50;
+      --cor-verde-hover: #66bb6a;
+      --cor-erro: #ff5252;
+      --cor-sucesso-bg: #214b35;
+      --cor-erro-bg: #3a1e1e;
+    }
+  
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--cor-fundo);
+      color: var(--cor-texto);
+      margin: 0;
+      padding: 20px;
+    }
+  
+    h1 {
+      text-align: center;
+      color: var(--cor-verde);
+    }
+  
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: var(--cor-painel);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+  
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: var(--cor-texto);
+    }
+  
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+  
+    input, select {
+      background-color: #2a4537;
+      color: var(--cor-texto);
+    }
+  
+    input::placeholder {
+      color: #b2d8c5;
+    }
+  
+    button {
+      background-color: var(--cor-verde);
+      color: white;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+  
+    button:hover {
+      background-color: var(--cor-verde-hover);
+    }
+  
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-left: 5px solid var(--cor-verde);
+      border-radius: 8px;
+      background-color: var(--cor-sucesso-bg);
+      color: #b2ffcc;
+    }
+  
+    .result strong {
+      color: #ffffff;
+    }
+  
+    .error {
+      border-left-color: var(--cor-erro);
+      background-color: var(--cor-erro-bg);
+      color: #ffcdd2;
+    }
+  
+    hr {
+      border: none;
+      border-top: 1px solid #446b5a;
+      margin: 30px 0;
+    }
+  
+    h2 {
+      color: #a2e8c1;
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora PD 300</h1>
+
+    <h2>1. Cálculo do Peso da Folha de Vidro</h2>
+    <label for="largura">Largura (mm):</label>
+    <input type="number" id="largura" placeholder="Ex: 1200">
+
+    <label for="altura">Altura (mm):</label>
+    <input type="number" id="altura" placeholder="Ex: 2100">
+
+    <label for="espessura">Espessura do vidro (mm):</label>
+    <select id="espessura">
+        <option value="">Selecione</option>
+        <option value="1">1 mm</option>
+        <option value="2">2 mm</option>
+        <option value="3">3 mm</option>
+        <option value="4">4 mm</option>
+        <option value="5">5 mm</option>
+        <option value="6">6 mm</option>
+        <option value="7">7 mm</option>
+        <option value="8">8 mm</option>
+        <option value="9">9 mm</option>
+        <option value="10">10 mm</option>
+        <option value="11">11 mm</option>
+        <option value="12">12 mm</option>
+        <option value="13">13 mm</option>
+        <option value="14">14 mm</option>
+        <option value="15">15 mm</option>
+        <option value="16">16 mm</option>
+        <option value="17">17 mm</option>
+        <option value="18">18 mm</option>
+        <option value="19">19 mm</option>
+        <option value="20">20 mm</option>
+      </select>
+
+    <button onclick="calcularPeso()">Calcular Peso</button>
+
+    <div id="resultadoPeso" class="result" style="display:none;"></div>
+
+    <hr>
+
+    <h2>2. Verificação de Compatibilidade</h2>
+    <label for="tipoFolha">Tipo de folha:</label>
+    <select id="tipoFolha">
+      <option value="simples">Simples</option>
+      <option value="dupla">Dupla</option>
+    </select>
+
+    <label for="pesoFolha">Peso total da(s) folha(s) (kg):</label>
+    <input type="number" id="pesoFolha" placeholder="Ex: 50">
+
+    <label for="larguraFolha">Largura total da folha (em metros):</label>
+    <input type="number" id="larguraFolha" step="0.01" placeholder="Ex: 1.2">
+
+    <button onclick="verificarCompatibilidade()">Verificar Compatibilidade</button>
+
+    <div id="resultadoCompatibilidade" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    function calcularPeso() {
+      const largura = parseFloat(document.getElementById('largura').value) / 1000; // mm -> m
+      const altura = parseFloat(document.getElementById('altura').value) / 1000;   // mm -> m
+      const espessura = parseFloat(document.getElementById('espessura').value);
+
+      const resultado = document.getElementById('resultadoPeso');
+
+      if (!largura || !altura || !espessura) {
+        resultado.className = "result error";
+        resultado.innerHTML = "❌ Preencha todos os campos corretamente.";
+        resultado.style.display = "block";
+        return;
+      }
+
+      const area = largura * altura;
+      const densidade = espessura * 2.5;
+      const peso = area * densidade;
+
+      resultado.className = "result";
+      resultado.innerHTML = `✅ A folha de vidro pesa aproximadamente <strong>${peso.toFixed(2)} kg</strong>.`;
+      resultado.style.display = "block";
+
+      // Preenche automaticamente o campo do peso para a verificação
+      document.getElementById('pesoFolha').value = peso.toFixed(2);
+    }
+
+    function verificarCompatibilidade() {
+  const tipo = document.getElementById('tipoFolha').value;
+  const pesoTotal = parseFloat(document.getElementById('pesoFolha').value);
+  const larguraTotal = parseFloat(document.getElementById('larguraFolha').value);
+  const resultado = document.getElementById('resultadoCompatibilidade');
+
+  if (!tipo || isNaN(pesoTotal) || isNaN(larguraTotal)) {
+    resultado.className = "result error";
+    resultado.innerHTML = "❌ Preencha todos os campos corretamente.";
+    resultado.style.display = "block";
+    return;
+  }
+
+  let podeUsar = false;
+  let modeloIdeal = "";
+  let motivoErro = "";
+
+  if (tipo === "simples") {
+    if (pesoTotal > 80) {
+      motivoErro = `o peso total de ${pesoTotal} kg excede o limite de 80 kg para folha simples.`;
+    } else if (larguraTotal > 1.2) {
+      motivoErro = `a largura total de ${larguraTotal} m excede o limite de 1,2 m para folha simples.`;
+    } else {
+      podeUsar = true;
+      modeloIdeal = "2,2m ou 3m";
+    }
+  }
+
+  if (tipo === "dupla") {
+    const larguraPorFolha = larguraTotal / 2;
+
+    if (pesoTotal > 60) {
+      motivoErro = `o peso total de ${pesoTotal} kg excede o limite de 60 kg para folhas duplas.`;
+    } else if (larguraPorFolha > 0.8) {
+      motivoErro = `a largura por folha de ${larguraPorFolha.toFixed(2)} m excede o limite de 0,8 m (modelo 3m).`;
+    } else if (larguraPorFolha > 0.6) {
+      podeUsar = true;
+      modeloIdeal = "3m";
+    } else {
+      podeUsar = true;
+      modeloIdeal = "2,2m ou 3m";
+    }
+  }
+
+  if (podeUsar) {
+    resultado.className = "result";
+    resultado.innerHTML = `✅ Compatível com o automatizador. Modelo recomendado: <strong>${modeloIdeal}</strong>.`;
+  } else {
+    resultado.className = "result error";
+    resultado.innerHTML = `❌ Projeto incompatível com as especificações do automatizador, pois ${motivoErro}`;
+  }
+
+  resultado.style.display = "block";
+}
+
+  </script>
+</body>
+</html>
