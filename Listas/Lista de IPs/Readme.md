@@ -27,4 +27,4 @@ O objetivo deste projeto é **centralizar e facilitar o acesso às informações
 
 ---
 
-💡 **Nota:** Este projeto é voltado para fins educacionais e de organização de rede. As credenciais são meramente ilustrativas ou correspondem a ambientes específicos.
+💡 **Nota:** Este projeto é voltado para fins educacionais e de organização de rede. As senhas e IPs são meramente ilustrativos.
