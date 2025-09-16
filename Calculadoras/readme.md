@@ -1,7 +1,7 @@
 # Calculadoras
 
-Neste diretório estão armazenados todos os projetos relacionados a **calculadoras** e outras ferramentas para **realizar cálculos**.  
+Este diretório contém **projetos de calculadoras** e outras ferramentas de cálculo desenvolvidas usando **HTML, CSS e JavaScript**.  
 
-Aqui você encontrará diferentes scripts e programas que permitem executar operações matemáticas, simulações ou qualquer tipo de cálculo que foi desenvolvido nos projetos.  
+Aqui você encontrará diferentes projetos web que permitem realizar operações matemáticas e outros tipos de cálculos, cada um organizado separadamente.  
 
-O objetivo deste diretório é centralizar todas as ferramentas de cálculo em um só lugar, facilitando o acesso e a organização.
+O objetivo é centralizar todas as ferramentas de cálculo web dentro do diretório `htmls`, facilitando acesso e organização.
