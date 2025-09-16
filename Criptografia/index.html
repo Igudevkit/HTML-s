@@ -1,0 +1,156 @@
+<html>
+<head>
+    <title>Criptografia Customizada</title>
+    <style>
+        body 
+        {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container 
+        {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        h1 
+        {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        textarea 
+        {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: none;
+        }
+        button 
+        {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover 
+        {
+            background-color: #45a049;
+        }
+        .result, .key 
+        {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            word-wrap: break-word;
+        }
+        .key 
+        {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9f7e9;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <iframe style="border-radius:12px" 
+    src="https://open.spotify.com/embed/track/68MsVSVZO8eSPdqPfhG83A?utm_source=generator" 
+    width="100%" 
+    height="152" 
+    frameBorder="0" 
+    allowfullscreen="" 
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+    loading="lazy">
+    </iframe>
+    <h1>Criptografar Texto</h1>
+    <textarea id="inputText" placeholder="Insira o texto aqui..."></textarea>
+    <button onclick="cryptographText()">Criptografar</button>
+
+    <div class="result" id="outputText"></div>
+
+    <div class="key" id="keyText"></div>
+</div>
+
+<script>
+    const sequence = ['k', 'q', 'ç', 'i', 'm', 'a', 'c', 'u', 'o', 'd', 'g', 'x', 'e', 'w', 't', 'z', 'y', 'b', 'r', 's', 'f', 'n', 'v', 'h', 'p', 'l', 'j'];
+
+    let lastKey = {};
+    let lastEncryptedText = '';
+
+    function cryptographText() {
+        const inputText = document.getElementById('inputText').value;
+        let outputText = '';
+        let letterMap = {};
+        let sequenceIndex = 0;
+        let seenLetters = [];
+
+        // Adicionando o ponto como um caractere especial
+        let sequenceWithDot = [...sequence, '.'];
+
+        for (let i = 0; i < inputText.length; i++) {
+            let char = inputText[i].toLowerCase();
+
+            // Verifica se é uma letra ou ponto (considerando acentos e caracteres especiais)
+            if (char.match(/[a-záéíóúãõ.]/)) {  
+                if (char === '.') {
+                    // Se encontrar o ponto, mapeia como "." e reinicia a sequência
+                    if (!letterMap[char]) {
+                        letterMap[char] = sequence[sequenceIndex];
+                    }
+                    outputText += letterMap[char];
+                    seenLetters = [];  // Limpa as letras vistas para reiniciar a sequência
+                    sequenceIndex = 0;
+                } else {
+                    if (!seenLetters.includes(char)) {
+                        seenLetters.push(char);
+                        letterMap[char] = sequence[sequenceIndex++];
+                        if (sequenceIndex >= sequenceWithDot.length) {
+                            sequenceIndex = 0;
+                        }
+                    }
+                    outputText += letterMap[char];
+                }
+            } else {
+                outputText += char; // Mantém espaços e outros caracteres
+            }
+        }
+
+        lastEncryptedText = outputText;  // Guarda o texto criptografado
+        document.getElementById('outputText').textContent = outputText;
+
+        // Gerar a chave de descriptografação considerando o texto criptografado
+        lastKey = {};
+        for (let letter in letterMap) {
+            lastKey[letter] = letterMap[letter];
+        }
+
+        // Gerar chave de descriptografar ordenada, incluindo todos os caracteres
+        let keyText = '';
+        Object.keys(lastKey).forEach(key => {
+            keyText += `${key}=${lastKey[key]} `;
+        });
+
+        document.getElementById('keyText').textContent = keyText.trim();
+    }
+</script>
+</body>
+</html>
