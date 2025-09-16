@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conversor Hex ⇄ Decimal (até 66 bits)</title>
+  <!--CSS-->
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <h1>Conversor Hex ⇄ Decimal <span class="tag">de 1 a 66 Bits</span></h1>
+        <div class="meta">
+          <span>(removivel) Usa <code class="mono">BigInt</code> para alta precisão</span>
+        </div>
+      </header>
+
+      <div class="grid">
+        <!-- Painel de controles -->
+         <!-- melhorar ui ux-->
+        <section class="field" style="grid-column: 1 / -1;">
+          <div class="row">
+            <label class="pill">Bits
+              <input id="bits" type="number" min="1" max="66" value="32" style="width:92px;margin-left:8px" />
+            </label>
+            <label class="pill">
+              <input id="signed" type="checkbox" /> &nbsp; Interpretar como <strong>assinado</strong> (2's complement)
+            </label>
+            <button class="btn" id="clearBtn" title="Limpar entradas">Limpar</button>
+          </div>
+          <small class="hint" id="rangeHint"></small>
+        </section>
+
+        <!-- HEX → DEC -->
+        <section class="field">
+          <div class="label">
+            <span>Hexadecimal → Decimal</span>
+            <div class="row">
+              <button class="btn" id="pasteHex">Colar</button>
+              <button class="btn" id="copyDecFromHex">Copiar Decimal</button>
+            </div>
+          </div>
+          <div class="input">
+            <span class="mono">0x</span>
+            <input id="hexIn" class="mono" placeholder="Ex.: FF, 1a2b, 0x7FFF..." autocomplete="off" spellcheck="false" />
+          </div>
+          <div class="input">
+            <input id="decOutFromHex" class="mono" placeholder="Decimal" readonly />
+          </div>
+          <small class="hint" id="hexWarn"></small>
+        </section>
+
+        <!-- DEC → HEX -->
+        <section class="field">
+          <div class="label">
+            <span>Decimal → Hexadecimal</span>
+            <div class="row">
+              <button class="btn" id="copyHexFromDec">Copiar Hex</button>
+            </div>
+          </div>
+          <div class="input">
+            <input id="decIn" class="mono" placeholder="Ex.: 255, -1 (se assinado)" autocomplete="off" spellcheck="false" />
+          </div>
+          <div class="input">
+            <span class="mono">0x</span>
+            <input id="hexOutFromDec" class="mono" placeholder="HEX" readonly />
+          </div>
+          <small class="hint" id="decWarn"></small>
+        </section>
+      </div>
+
+      <div class="foot">
+        <span>Atalhos: <kbd>Ctrl/⌘ + Enter</kbd> alterna foco entre campos • <kbd>Esc</kbd> limpa</span>
+        <span>Cálculos dentro da largura de bits selecionada.</span>
+      </div>
+    </div>
+  </div>
+
+  <!--JavaScript-->
+  <script src="script.js"></script>
+</body>
+</html>
