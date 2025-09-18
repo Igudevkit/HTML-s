@@ -1,0 +1,328 @@
+:root{ /* variáveis globais */
+    --rose-1: #ffd6e8; /* tons de rosa para o fundo */
+    --rose-2: #ff9cc3; /* você pode ajustar esses valores para mudar o gradiente */
+    --rose-3: #ff79a8; /* cores mais vibrantes */
+    --glass: rgba(255,255,255,0.12); /* efeito vidro fosco */
+    --glass-strong: rgba(255,255,255,0.18); /* vidro mais forte */
+    --cSard-radius: 18px; /* bordas arredondadas dos cards */
+    --transition: 500ms cubic-bezier(.2,.9,.3,1); /* transições suaves */
+    --accent: #ff4f7b; /* cor de destaque */
+    --text: #2b1020; /* cor do texto */
+    font-family: "Inter", "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial; /* fonte moderna e legível */
+}
+
+html,body{
+    margin:0; /* remove margens padrão */
+    -webkit-font-smoothing:antialiased; /* suavização de fontes para melhor legibilidade */
+    -moz-osx-font-smoothing:grayscale; /* suavização de fontes no Firefox */
+    color:var(--text); /* cor do texto */
+    background: linear-gradient(160deg, var(--rose-1) 0%, var(--rose-2) 45%, var(--rose-3) 100%); /* fundo com gradiente de rosa */
+    display:flex; /* usa flexbox para centralizar o conteúdo */
+    justify-content:center; /* centraliza horizontalmente */
+    align-items:center; /* centraliza verticalmente */
+    padding:24px; /* espaçamento ao redor */
+    overflow-x:hidden; /* evita overflow horizontal */
+}
+
+.stage{ /* container principal */
+    position:relative; /* para posicionamento absoluto dos elementos internos */
+    width:100%; /* ocupa toda a largura disponível */
+    max-width:var(--max-width); /* largura máxima definida */
+    min-height:520px; /* altura mínima */
+    height:auto; /* altura automática */
+    border-radius:20px; /* bordas arredondadas */
+    overflow:hidden; /* esconde overflow */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.14); /* sombra para profundidade */
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.02)); /* fundo sutil */
+    backdrop-filter: blur(6px); /* efeito vidro fosco */
+    padding:24px; /* espaçamento interno */
+    box-sizing:border-box; /* inclui padding na largura/altura */
+    display:flex; /* usa flexbox */
+    flex-direction:column; /* organiza filhos em coluna */
+    align-items:center; /* centraliza filhos horizontalmente */
+}
+
+  /* Estrelas */
+.stars{
+    position:absolute; /* posicionamento absoluto */
+    inset:0; /* cobre todo o container */
+    pointer-events:none; /* permite clicar através */
+    overflow:hidden; /* esconde overflow */
+    z-index:1; /* fica atrás do conteúdo principal */
+}
+
+.stars img{ /* estilo das estrelas */
+    position:absolute; /* posicionamento absoluto */
+    bottom:-40px; /* começa um pouco abaixo da tela */
+    opacity:0.15; /* opacidade inicial */
+    transform-origin:center; /* origem da transformação no centro */
+    will-change: transform, opacity; /* otimização para animações */
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12)); /* sombra para profundidade */
+    animation-name:floatStar; /* nome da animação */
+    animation-timing-function: linear; /* animação linear */
+    animation-iteration-count: infinite; /* animação infinita */
+}
+
+@keyframes floatStar{ /* definição da animação */
+    0%{ transform: translateY(0) scale(0.8); opacity:0.06; } /* estado inicial */
+    10%{ opacity:0.12; } /* aumenta opacidade */
+    50%{ transform: translateY(-60vh) scale(1.05); opacity:0.28; } /* meio da animação */
+    85%{ opacity:0.18; } /* diminui opacidade */
+    100%{ transform: translateY(-120vh) scale(1.4); opacity:0; } /* estado final */
+  }
+
+  /* Tela inicial */
+.entry-screen{
+    position:absolute; /* posicionamento absoluto */
+    inset:0; /* cobre todo o container */
+    z-index:5; /* fica acima do conteúdo principal */
+    display:flex; /* usa flexbox */
+    align-items:center; /* centraliza verticalmente */
+    justify-content:center; /* centraliza horizontalmente */
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00)); /* fundo sutil */
+    transition: opacity 400ms ease, transform 400ms ease; /* transições suaves */
+}
+
+.envelope{ /* estilo do envelope */
+    width: min(520px, 86%); /* largura responsiva */
+    max-width:520px; /* largura máxima */
+    height:320px; /* altura fixa */
+    perspective:1200px; /* perspectiva 3D */
+    position:relative; /* para posicionamento absoluto dos filhos */
+    display:flex; /* usa flexbox */
+    align-items:center; /* centraliza verticalmente */
+    justify-content:center; /* centraliza horizontalmente */
+    transform-style: preserve-3d; /* preserva o efeito 3D */
+}
+
+.envelope .body{ /* corpo do envelope */
+    position:absolute; /* posicionamento absoluto */
+    inset:0; /* cobre todo o envelope */
+    border-radius:16px; /* bordas arredondadas */
+    background: linear-gradient(180deg, #fff 0%, #ffeef6 100%); /* fundo branco com leve rosa */
+    box-shadow: 0 18px 40px rgba(255,20,100,0.08), 0 6px 18px rgba(0,0,0,0.08); /* sombra para profundidade */
+    display:flex; /* usa flexbox */
+    align-items:center; /* centraliza verticalmente */
+    justify-content:center; /* centraliza horizontalmente */
+    padding:32px; /* espaçamento interno */
+    z-index:1; /* fica atrás da aba */
+}
+
+.envelope .flap{ /* aba do envelope */
+    position:absolute; /* posicionamento absoluto */
+    top:0; /* começa no topo */
+    left:0; /* começa na esquerda */
+    right:0; /* termina na direita */
+    height:60%; /* altura da aba */
+    border-top-left-radius:16px; /* borda arredondada no canto superior esquerdo */
+    border-top-right-radius:16px; /* borda arredondada no canto superior direito */
+    transform-origin: top center; /* origem da transformação no topo central */
+    display:flex; /* usa flexbox */
+    align-items:flex-start; /* alinha ao topo */
+    justify-content:center; /* centraliza horizontalmente */
+    backface-visibility: hidden; /* esconde o verso quando virado */
+    z-index:3; /* fica acima do corpo */
+    transform: rotateX(0deg); /* estado inicial */
+    transition: transform 900ms cubic-bezier(.2,.9,.2,1); /* transição suave */
+    background: linear-gradient(120deg, #ffd6ea 0%, #ff9cc3 50%, #ff79a8 100%); /* gradiente rosa */
+    box-shadow: inset 0 -6px 12px rgba(0,0,0,0.05); /* sombra interna para profundidade */
+}
+
+.envelope .inner-text{ /* texto dentro do envelope */
+    position:relative; /* posicionamento relativo */
+    z-index:4; /* fica acima do corpo e da aba */
+    font-size:20px; /* tamanho da fonte */
+    font-weight:600;
+    text-align:center; /* centraliza o texto */
+    padding-top:5px; /* espaçamento superior */
+    color:#420022; /* cor do texto */
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5); /* sombra para melhor legibilidade */
+}
+  
+.open-btn{ /* botão para abrir o envelope */
+    position:absolute; /* posicionamento absoluto */
+    bottom:20px; /* 20px do fundo */
+    left:50%; /* centralizado horizontalmente */
+    transform:translateX(-50%); /* ajusta para o centro */
+    z-index:6; /* fica acima de tudo */
+    background:transparent; /* fundo transparente */
+    border:0; /* sem borda */
+    cursor:pointer; /* cursor de ponteiro */
+    width:64px;height:64px; /* tamanho do botão */
+    border-radius:50%; /* botão redondo */
+    display:flex; /* usa flexbox */
+    align-items:center; /* centraliza verticalmente */
+    justify-content:center; /* centraliza horizontalmente */
+    transition: transform 220ms ease, box-shadow 220ms ease;    /* transições suaves */
+    box-shadow: 0 8px 22px rgba(255,80,120,0.12); /* sombra para profundidade */
+}
+
+.open-btn:active{ transform:translateX(-50%) scale(0.98); } /* efeito ao clicar */
+.open-btn img{ width:44px;height:44px; pointer-events:none; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.08)); } /* ícone dentro do botão */
+.envelope.open .flap{ transform: rotateX(90deg); transition: transform 900ms cubic-bezier(.1,.8,.2,1); } /* animação ao abrir o envelope */
+.entry-screen.hide{ opacity:0; pointer-events:none; transform: scale(0.98) translateY(10px); } /* animação ao esconder a tela inicial */
+
+  /* Página principal */
+.main{
+    position:relative; /* posicionamento relativo */
+    width:100%; /* ocupa toda a largura disponível */
+    display:flex; /* usa flexbox */
+    flex-direction:column; /* organiza filhos em coluna */
+    gap:24px; /* espaçamento entre elementos */
+    opacity:0;  
+    pointer-events:none; /* desativa interações */
+    transition: opacity 600ms ease 250ms, transform 600ms ease 250ms; /* transições suaves */
+    transform: translateY(8px); /* leve deslocamento para animação de entrada */
+}
+
+.main.visible{ opacity:1; pointer-events:auto; transform: translateY(0); } /* animação ao mostrar a página principal */
+
+.content{ /* container do conteúdo */
+    width:100%; /* ocupa toda a largura disponível */
+    display:flex; /* usa flexbox */
+    flex-wrap:wrap; /* permite quebra de linha */
+    gap:24px; /* espaçamento entre elementos */
+    justify-content:center; /* centraliza horizontalmente */
+}
+
+.message{ /* card de mensagem */
+    flex:1 1 300px; /* flexível, mínimo 300px */
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); /* fundo sutil */
+    padding:28px; /* espaçamento interno */
+    border-radius: var(--card-radius); /* bordas arredondadas */
+    border: 1px solid rgba(255,255,255,0.06); /* borda sutil */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06); /* sombra para profundidade */
+    font-size: clamp(18px, 2.6vw, 26px); /* tamanho de fonte responsivo */
+    line-height:1.45; /* espaçamento entre linhas */
+    text-align:center; /* centraliza o texto */
+    font-weight:600; 
+    color:#2d0b1a; /* cor do texto */
+    backdrop-filter: blur(4px); /* efeito vidro fosco */
+    position: relative; /* para z-index */
+    z-index: 10; /* fica acima das estrelas IMPORTANTE*/
+}
+
+.right-column{ /* coluna direita */
+    flex:1 1 300px; /* flexível, mínimo 300px */
+    display:flex; /* usa flexbox */
+    flex-direction:column; /* organiza filhos em coluna */
+    gap:18px; /* espaçamento entre elementos */
+    align-items:center; /* centraliza horizontalmente */
+}
+
+.gallery-card{ /* card da galeria */
+    width:100%; /* ocupa toda a largura disponível */
+    max-width:420px; /* largura máxima */
+    border-radius:14px; /* bordas arredondadas */
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); /* fundo sutil */
+    display:flex; /* usa flexbox */
+    align-items:center; /* centraliza verticalmente */
+    justify-content:center; /* centraliza horizontalmente */
+    position:relative; /* para posicionamento absoluto dos controles */
+    perspective:1400px; /* perspectiva 3D */
+    overflow:visible; /* permite overflow para sombras */
+    padding:18px; /* espaçamento interno */
+}
+
+.gallery{ /* container da galeria */
+    width:100%; /* ocupa toda a largura disponível */
+    aspect-ratio: 4/3; /* mantém proporção 4:3 nao sei se ta funcionando */
+    position:relative; /* para posicionamento absoluto das fotos */
+    display:flex; /* usa flexbox */
+    align-items:center; /* centraliza verticalmente */
+    justify-content:center; /* centraliza horizontalmente */
+}
+
+.photo{ /* estilo das fotos */
+    position:absolute; /* posicionamento absoluto */
+    width:100%; /* ocupa toda a largura disponível */
+    height:100%; /* ocupa toda a altura disponível */
+    border-radius:12px; /* bordas arredondadas */
+    overflow:hidden; /* esconde overflow */
+    display:flex; /* usa flexbox */
+    align-items:center; /* centraliza verticalmente */
+    justify-content:center; /* centraliza horizontalmente */
+    transition: transform 700ms cubic-bezier(.2,.9,.2,1), opacity 500ms ease, filter 400ms ease; /* transições suaves */
+    will-change: transform, opacity, filter; /* otimização para animações */
+}
+.photo img{ /* estilo das imagens */
+    width:100%; /* ocupa toda a largura disponível */
+    height:100%; /* ocupa toda a altura disponível */
+    object-fit: contain; /* garante que a imagem apareça inteira */
+    border-radius:12px; /* bordas arredondadas */
+}
+
+.photo.active{ transform: translateZ(0px) scale(1) translateX(0) rotateY(0deg); opacity:1; z-index:4; filter:none; } /* foto ativa */
+
+.photo.left{ /* foto à esquerda */
+    transform: translateX(-46%) translateZ(-120px) scale(0.86) rotateY(18deg); /* posição 3D */
+    opacity:0.92; z-index:3; filter: saturate(0.9) brightness(0.95);  /* leve desfoque e opacidade */
+}
+
+  .photo.right{ transform: translateX(46%) translateZ(-120px) scale(0.86) rotateY(-18deg); /* posição 3D */
+    opacity:0.92; z-index:3; filter: saturate(0.9) brightness(0.95); /* leve desfoque e opacidade */
+}
+
+.photo.hidden{ transform: translateY(12%) translateZ(-220px) scale(0.66); opacity:0; z-index:1; } /* fotos escondidas */
+
+.gallery-controls{ /* controles da galeria */
+    position:absolute; /* posicionamento absoluto */
+    bottom:12px; /* 12px do fundo */
+    left:50%; /* centralizado horizontalmente */
+    transform:translateX(-50%); /* ajusta para o centro */
+    display:flex; /* usa flexbox */
+    gap:12px; /* espaçamento entre botões */
+    z-index:9; /* fica acima das fotos */
+}
+
+.nav-btn{ /* botões de navegação */
+    background:var(--glass); /* fundo vidro fosco */
+    border:1px solid rgba(255,255,255,0.06); /* borda sutil */
+    width:44px;height:44px; /* tamanho do botão */
+    border-radius:10px; /* bordas arredondadas */
+    display:flex; /* usa flexbox */
+    align-items:center; /* centraliza verticalmente */
+    justify-content:center; /* centraliza horizontalmente */
+    cursor:pointer; /* cursor de ponteiro */
+    transition: transform 150ms ease; /* transição suave */
+}
+
+.nav-btn:active{ transform:scale(.98); } /* efeito ao clicar */
+.nav-btn svg{ width:20px;height:20px; opacity:0.95; } /* ícones dentro dos botões */
+
+.gallery-title{ width:100%; text-align:left; font-weight:700; color:#2b0b14; padding-left:8px; } /* título da galeria */
+
+.timer-card{ /* card do timer */
+    width:100%; /* ocupa toda a largura disponível */
+    border-radius:12px; /* bordas arredondadas */
+    padding:16px; /* espaçamento interno */
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); /* fundo sutil */
+    border: 1px solid rgba(255,255,255,0.04); /* borda sutil */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06); /* sombra para profundidade */
+    backdrop-filter: blur(4px); /* efeito vidro fosco */
+    display:flex; /* usa flexbox */
+    flex-direction:column; /* organiza filhos em coluna */
+    gap:8px; /* espaçamento entre elementos */
+    align-items:flex-start; /* alinha à esquerda */
+    justify-content:center; /* centraliza verticalmente */
+}
+
+.timer-card h3{ margin:0;font-size:16px;font-weight:800; } /* título do timer */
+.timer{ font-size:18px; font-weight:700; color:#2b0b14; } /* estilo do timer */
+.footer-note{ font-size:13px; color:rgba(43,16,32,0.7); margin-top:24px; } /* nota de rodapé */
+
+  /* Responsividade */
+@media (max-width:920px){ /* telas menores */
+    .content{ flex-direction:column; align-items:center; } /* organiza em coluna e centraliza */
+    .gallery-card{ max-width:90%; } /* largura máxima da galeria */
+}
+
+@media (max-width:520px){ /* telas muito pequenas */
+    :root{ --card-radius: 12px; } /* bordas dos cards menores */
+    .message{ font-size:16px; padding:20px; border-radius:12px; } /* card de mensagem menor */
+    .gallery-card{ height:auto; } /* altura automática da galeria */
+    .photo{ height:200px; } /* altura fixa das fotos */
+    .open-btn{ width:56px;height:56px; } /* botão menor */
+    .open-btn img{ width:36px;height:36px; } /* ícone menor */
+    .timer{ font-size:15px; } /* timer menor */
+}
