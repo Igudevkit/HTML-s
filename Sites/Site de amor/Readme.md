@@ -1,11 +1,11 @@
-# 💌 Site de Amor
+# Site de Amor
 
 Este projeto é uma página especial desenvolvida em **HTML, CSS e JavaScript**, criada como uma surpresa romântica.  
 Ele reúne animações, galeria de fotos e um contador do tempo de relacionamento, formando uma experiência interativa e personalizada.  
 
 ---
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 - **Tela inicial animada** com um envelope que se abre revelando a mensagem principal.  
 - **Céu estrelado animado** no fundo, criado dinamicamente via JavaScript.  
@@ -18,11 +18,11 @@ Ele reúne animações, galeria de fotos e um contador do tempo de relacionament
 
 ---
 
-## 🖼️ Estrutura de Pastas
+## Estrutura de Pastas
 📂 site-de-amor
-📄 index.html
-📄 style.css
-📄 script.js
+index.html
+style.css
+script.js
 
 📂 img
 foto1.png
@@ -33,8 +33,8 @@ star.svg
 
 ---
 
-## 🛠️ Tecnologias utilizadas
+## Tecnologias utilizadas
 
 - **HTML5** – estrutura e semântica.  
 - **CSS3** – estilização e animações.  
-- **JavaScript (Vanilla)** – interatividade (galeria, estrelas, contador).  
+- **JavaScript (Vanilla)**
