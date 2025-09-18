@@ -19,17 +19,17 @@ Ele reúne animações, galeria de fotos e um contador do tempo de relacionament
 ---
 
 ## Estrutura de Pastas
-📂 site-de-amor
-index.html
-style.css
-script.js
+📂 site-de-amor:
+- index.html
+- style.css
+- script.js
 
 📂 img
-foto1.png
-foto2.png
-foto3.jpg
-foto4.png
-star.svg
+- foto1.png
+- foto2.png
+- foto3.jpg
+- foto4.png
+- star.svg
 
 ---
 
