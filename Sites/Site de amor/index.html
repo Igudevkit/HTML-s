@@ -1,63 +1,154 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Para o meu amor 💌</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="stage">
-    <!-- Estrelas -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Para o meu amor 💌</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- ============================================================
+         FUNDO DE ESTRELAS
+         Container onde as estrelas animadas serão criadas via script.js
+    ============================================================ -->
     <div class="stars"></div>
 
-    <!-- Tela inicial -->
+    <!-- ============================================================
+         ELA INICIAL — ENVELOPE INTERATIVO
+         Mostra o envelope com a mensagem inicial antes de abrir a carta.
+    ============================================================ -->
     <div class="entry-screen" id="entry">
       <div class="envelope" id="envelope">
+        <!-- Aba superior do envelope -->
         <div class="flap"></div>
+
+        <!-- Corpo do envelope -->
         <div class="body">
           <div class="inner-text">Uma surpresa só pra você</div>
         </div>
+
+        <!-- Botão que abre o envelope -->
         <button class="open-btn" id="openBtn" aria-label="Abrir carta">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.5C3 6.1193 4.1193 5 5.5 5H18.5C19.8807 5 21 6.1193 21 7.5V16.5C21 17.8807 19.8807 19 18.5 19H5.5C4.1193 19 3 17.8807 3 16.5V7.5Z" stroke="#7a1830" stroke-width="1.2" stroke-linejoin="round"/><path d="M3.9 7.4L11.6 12.3C12.2 12.7 13 12.7 13.6 12.3L20.1 7.5" stroke="#7a1830" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <!-- Ícone SVG do envelope -->
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 7.5C3 6.1193 4.1193 5 5.5 5H18.5C19.8807 5 21 6.1193 21 7.5V16.5C21 17.8807 19.8807 19 18.5 19H5.5C4.1193 19 3 17.8807 3 16.5V7.5Z"
+              stroke="#7a1830"
+              stroke-width="1.2"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M3.9 7.4L11.6 12.3C12.2 12.7 13 12.7 13.6 12.3L20.1 7.5"
+              stroke="#7a1830"
+              stroke-width="1.2"
+              stroke-linecap="round"
+            />
+          </svg>
         </button>
       </div>
     </div>
 
-    <!-- Página principal -->
-    <div class="main" id="main">
-      <div class="content">
-        <div class="message" id="mainMessage">
-          Meu amor, você é a melhor parte dos meus dias. <br><br>
-          Eu quero agradecer por cada sorriso, cada silêncio confortável, e cada momento que se tornou lembrança. <br><br>
-          Você é meu porto seguro, minha risada no meio da manhã e minha paz quando o mundo parece alto demais. Te amo hoje e sempre. ❤️
-        </div>
+    <!-- ============================================================
+         CENA PRINCIPAL (CONTEÚDO APÓS ABRIR O ENVELOPE)
+         Contém a mensagem, galeria de fotos e contador de tempo juntos.
+    ============================================================ -->
+    <div class="stage">
+      <div class="main" id="main">
+        <div class="content">
+          <!-- ============================================================
+               MENSAGEM PRINCIPAL
+               Texto romântico exibido após abrir o envelope.
+          ============================================================ -->
+          <div class="message" id="mainMessage">
+            Meu amor, você não é apenas parte dos meus dias, você é o motivo
+            pelo qual cada um deles vale a pena. <br /><br />
+            Eu quero agradecer por cada sorriso, cada silêncio confortável, e
+            cada momento que se tornou lembrança. <br /><br />
+            Você é a segurança que me mantém firme quando o mundo parece
+            desmoronar, e a alegria que me surpreende até nos momentos mais
+            comuns. Estar ao seu lado transforma a rotina em algo único e
+            precioso. <br /><br />
+            Se eu tivesse a chance de viver mil vidas, em todas elas eu
+            escolheria você. <br /><br />
+            Eu te amo de um jeito que nenhuma palavra é capaz de descrever por
+            completo. Hoje, amanhã e sempre, eu escolho você. ❤️
+          </div>
 
-        <div class="right-column">
-          <div class="gallery-title">Nossas lembranças :)</div>
-          <div class="gallery-card">
-            <div class="gallery" id="gallery"></div>
-            <div class="gallery-controls">
-              <button id="prev" class="nav-btn" aria-label="Foto anterior">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 6L9 12L15 18" stroke="#2b0b14" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <button id="next" class="nav-btn" aria-label="Próxima foto">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6L15 12L9 18" stroke="#2b0b14" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
+          <!-- ============================================================
+               COLUNA DIREITA — GALERIA E TEMPORIZADOR
+               Mostra fotos e o tempo de relacionamento em tempo real.
+          ============================================================ -->
+          <div class="right-column">
+            <!-- ====== GALERIA DE FOTOS ====== -->
+            <div class="gallery-title">Nossas lembranças :)</div>
+            <div class="gallery-card">
+              <div class="gallery" id="gallery"></div>
+
+              <!-- Botões de navegação da galeria -->
+              <div class="gallery-controls">
+                <!-- Botão anterior -->
+                <button id="prev" class="nav-btn" aria-label="Foto anterior">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 6L9 12L15 18"
+                      stroke="#2b0b14"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+
+                <!-- Botão próximo -->
+                <button id="next" class="nav-btn" aria-label="Próxima foto">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 6L15 12L9 18"
+                      stroke="#2b0b14"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- ====== TEMPORIZADOR DE TEMPO JUNTOS ====== -->
+            <div class="timer-card" aria-live="polite">
+              <h3>Nosso tempo juntos 💕</h3>
+              <div class="timer" id="coupleTimer">Carregando tempo...</div>
             </div>
           </div>
+        </div>
 
-          <div class="timer-card" aria-live="polite">
-            <h3>Nosso tempo juntos 💕</h3>
-            <div class="timer" id="coupleTimer">Carregando tempo...</div>
-          </div>
+        <!-- ============================================================
+             RODAPÉ
+             Frase de encerramento com toque pessoal.
+        ============================================================ -->
+        <div class="footer-note">
+          Um presente para comemorar nosso amor - feito com carinho
         </div>
       </div>
-      <div class="footer-note">Um presente do Igor para  — feito com carinho</div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
-
-</body>
+    <!-- ============================================================
+         SCRIPT PRINCIPAL
+         Controla as animações, galeria, envelope e temporizador.
+    ============================================================ -->
+    <script src="script.js"></script>
+  </body>
 </html>
