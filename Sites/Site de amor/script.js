@@ -1,140 +1,200 @@
-/* Cria as Estrelas */
-function createStars() { // Função que cria as estrelas no fundo
-    const container = document.querySelector('.stars'); // Seleciona o container onde as estrelas vão ficar
-    for (let i = 0; i < 60; i++) { // Repete 60 vezes para criar várias estrelas
-      const img = document.createElement('img'); // Cria um elemento de imagem
-      img.src = "img/star.svg"; // Define o arquivo da estrela (pasta img/)
-      const size = Math.floor(Math.random() * 21) + 10; // Define tamanho aleatório entre 10 e 30 pixels
-      img.style.width = size + "px"; // Define largura
-      img.style.height = size + "px"; // Define altura
-      img.style.left = Math.random() * 100 + "%"; // Posição horizontal aleatória na tela
-      img.style.animationDuration = (Math.random() * 12 + 10) + "s"; // Tempo de animação entre 10s e 22s
-      img.style.animationDelay = Math.random() * -20 + "s"; // Atraso aleatório para não começarem juntas
-      img.style.opacity = (0.05 + Math.random() * 0.25).toString(); // Define opacidade entre 0.05 e 0.3
-      container.appendChild(img); // Adiciona a estrela dentro do container
-    }
+/* ============================================================
+   FUNÇÃO DE CRIAÇÃO DE ESTRELAS DE FUNDO
+   Gera 60 estrelas aleatórias animadas para o cenário.
+============================================================ */
+function createStars() {
+  const container = document.querySelector(".stars"); // Container onde as estrelas serão inseridas
+
+  for (let i = 0; i < 60; i++) {
+    // Cria 60 estrelas
+    const img = document.createElement("img"); // Cria um elemento <img>
+    img.src = "img/star.svg"; // Caminho da imagem da estrela
+
+    // Define propriedades visuais aleatórias para cada estrela
+    const size = Math.floor(Math.random() * 21) + 10; // Tamanho entre 10px e 30px
+    img.style.width = size + "px";
+    img.style.height = size + "px";
+    img.style.left = Math.random() * 100 + "%"; // Posição horizontal aleatória
+    img.style.animationDuration = Math.random() * 12 + 10 + "s"; // Duração da animação (10s a 22s)
+    img.style.animationDelay = Math.random() * -20 + "s"; // Atraso aleatório
+    img.style.opacity = (0.05 + Math.random() * 0.25).toString(); // Opacidade entre 0.05 e 0.3
+
+    container.appendChild(img); // Adiciona a estrela ao container
   }
-  createStars(); // Chama a função para criar as estrelas
-  
-  /* Abre o Envelope */
-  const envelope = document.getElementById('envelope'); // Pega o elemento do envelope
-  const entry = document.getElementById('entry'); // Pega a tela de entrada
-  const main = document.getElementById('main'); // Pega a tela principal
-  const openBtn = document.getElementById('openBtn'); // Pega o botão de abrir carta
-  
-  openBtn.addEventListener('click', () => { // Quando clicar no botão
-    envelope.classList.add('open'); // Adiciona a classe "open" ao envelope
-    setTimeout(() => { // Espera 1 segundo
-      entry.classList.add('hide'); // Esconde a tela inicial
-      main.classList.add('visible'); // Mostra a tela principal
-    }, 1000); // Tempo em milissegundos (1s)
+}
+createStars(); // Executa a função assim que o script é carregado
+
+/* ============================================================
+   ANIMAÇÃO DO ENVELOPE (TELA DE ENTRADA)
+   Controla a abertura da carta e a transição para o conteúdo principal.
+============================================================ */
+const envelope = document.getElementById("envelope");
+const entry = document.getElementById("entry");
+const main = document.getElementById("main");
+const openBtn = document.getElementById("openBtn");
+
+// Evento de clique no botão para abrir o envelope
+openBtn.addEventListener("click", () => {
+  envelope.classList.add("open"); // Adiciona a classe que aciona a animação de abertura
+  setTimeout(() => {
+    // Após 1 segundo (tempo da animação)
+    entry.classList.add("hide"); // Oculta a tela inicial
+    main.classList.add("visible"); // Exibe o conteúdo principal
+  }, 1000);
+});
+
+// Permite abrir com a tecla Enter ou Espaço
+openBtn.addEventListener("keyup", (e) => {
+  if (e.key === "Enter" || e.key === " ") openBtn.click();
+});
+
+/* ============================================================
+   GALERIA DE FOTOS INTERATIVA
+   Mostra fotos alternadamente com botões, timer automático e gesto de swipe.
+============================================================ */
+(function () {
+  const galleryEl = document.getElementById("gallery");
+  const photos = [
+    { src: "img/2-encontro.jpg" },
+    { src: "img/3-encontro.jpg" },
+    { src: "img/foto3.jpg" },
+    { src: "img/foto2.png" },
+  ];
+
+  // Cria dinamicamente os elementos das fotos
+  photos.forEach((data, i) => {
+    const div = document.createElement("div");
+    div.className = "photo hidden"; // Começa oculta
+    div.setAttribute("data-index", i);
+    const img = document.createElement("img");
+    img.src = data.src;
+    div.appendChild(img);
+    galleryEl.appendChild(div);
   });
-  
-  openBtn.addEventListener('keyup', e => { // Evento de teclado no botão
-    if (e.key === 'Enter' || e.key === ' ') openBtn.click(); // Se apertar Enter ou Espaço, abre também
+
+  const photoEls = Array.from(galleryEl.querySelectorAll(".photo"));
+  let index = 0; // Índice da foto atualmente visível
+
+  // Atualiza a exibição da galeria conforme o índice atual
+  function updateGallery() {
+    photoEls.forEach((el, i) => {
+      el.classList.remove("left", "right", "active", "hidden"); // Limpa classes antigas
+
+      if (i === index) el.classList.add("active"); // Foto atual
+      else if (i === (index - 1 + photoEls.length) % photoEls.length)
+        el.classList.add("left"); // Foto anterior
+      else if (i === (index + 1) % photoEls.length)
+        el.classList.add("right"); // Próxima foto
+      else el.classList.add("hidden"); // Outras são ocultadas
+    });
+  }
+
+  // Controles manuais (botões)
+  document.getElementById("prev").addEventListener("click", () => {
+    index = (index - 1 + photoEls.length) % photoEls.length;
+    updateGallery();
+    resetAuto();
   });
-  
-  /* Galeria de Fotos */
-  (function () { // Função auto-executada
-    const galleryEl = document.getElementById('gallery'); // Seleciona o container da galeria
-    const photos = [ // Lista de fotos que vão aparecer
-      { src: "img/foto1.png" },
-      { src: "img/foto2.png" },
-      { src: "img/foto3.jpg" },
-      { src: "img/foto4.png" }
-    ];
-  
-    photos.forEach((data, i) => { // Para cada foto da lista
-      const div = document.createElement('div'); // Cria uma div para cada foto
-      div.className = 'photo hidden'; // Define a classe padrão (escondida)
-      div.setAttribute('data-index', i); // Guarda o índice da foto
-      const img = document.createElement('img'); // Cria um elemento de imagem
-      img.src = data.src; // Define o arquivo da foto
-      div.appendChild(img); // Coloca a imagem dentro da div
-      galleryEl.appendChild(div); // Coloca a div dentro da galeria
-    });
-  
-    const photoEls = Array.from(galleryEl.querySelectorAll('.photo')); // Pega todas as fotos adicionadas
-    let index = 0; // Começa mostrando a primeira foto
-  
-    function updateGallery() { // Função para atualizar a galeria
-      photoEls.forEach((el, i) => { // Para cada foto
-        el.classList.remove('left', 'right', 'active', 'hidden'); // Remove classes antigas
-        if (i === index) { // Se for a foto atual
-          el.classList.add('active'); // Marca como ativa
-        } else if (i === ((index - 1 + photoEls.length) % photoEls.length)) { // Se for a anterior
-          el.classList.add('left'); // Marca como esquerda
-        } else if (i === ((index + 1) % photoEls.length)) { // Se for a próxima
-          el.classList.add('right'); // Marca como direita
-        } else {
-          el.classList.add('hidden'); // Esconde as outras
-        }
-      });
-    }
-  
-    document.getElementById('prev').addEventListener('click', () => { // Botão "Anterior"
-      index = (index - 1 + photoEls.length) % photoEls.length; // Atualiza índice para a foto anterior
-      updateGallery(); // Atualiza galeria
-      resetAuto(); // Reseta contador automático
-    });
-  
-    document.getElementById('next').addEventListener('click', () => { // Botão "Próximo"
-      index = (index + 1) % photoEls.length; // Atualiza índice para a próxima foto
-      updateGallery(); // Atualiza galeria
-      resetAuto(); // Reseta contador automático
-    });
-  
-    let auto = setInterval(() => { // Troca automática de foto a cada 5s
-      index = (index + 1) % photoEls.length; // Passa para a próxima
-      updateGallery(); // Atualiza galeria
+
+  document.getElementById("next").addEventListener("click", () => {
+    index = (index + 1) % photoEls.length;
+    updateGallery();
+    resetAuto();
+  });
+
+  // Troca automática a cada 5 segundos
+  let auto = setInterval(() => {
+    index = (index + 1) % photoEls.length;
+    updateGallery();
+  }, 5000);
+
+  // Reinicia o contador automático ao trocar manualmente
+  function resetAuto() {
+    clearInterval(auto);
+    auto = setInterval(() => {
+      index = (index + 1) % photoEls.length;
+      updateGallery();
     }, 5000);
-  
-    function resetAuto() { // Função para resetar o timer automático
-      clearInterval(auto); // Para o timer atual
-      auto = setInterval(() => { // Cria um novo timer
-        index = (index + 1) % photoEls.length; // Vai para próxima
-        updateGallery(); // Atualiza
-      }, 5000);
+  }
+
+  updateGallery(); // Exibe a primeira foto logo ao carregar
+
+  // ======== SUPORTE A GESTOS DE SWIPE (TOQUE MÓVEL) ========
+  let startX = 0;
+  let endX = 0;
+
+  // Detecta início do toque
+  galleryEl.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  // Detecta movimento do toque
+  galleryEl.addEventListener("touchmove", (e) => {
+    endX = e.touches[0].clientX;
+  });
+
+  // Detecta fim do toque e decide direção do swipe
+  galleryEl.addEventListener("touchend", () => {
+    let diff = startX - endX;
+    if (Math.abs(diff) > 50) {
+      // Só considera se o movimento for significativo
+      if (diff > 0) index = (index + 1) % photoEls.length; // Swipe → próxima
+      else index = (index - 1 + photoEls.length) % photoEls.length; // Swipe ← anterior
+      updateGallery();
+      resetAuto();
     }
-  
-    updateGallery(); // Inicia a galeria já com a primeira foto ativa
-  })();
-  
-  /* Temporizador de Tempo Juntos */
-  (function () { // Função auto-executada
-    const el = document.getElementById('coupleTimer'); // Seleciona o elemento onde o tempo será mostrado
-    const start = new Date("2023-06-15T20:30:00"); // Define a data inicial do relacionamento
-  
-    function update() { // Função que atualiza o contador
-      const now = new Date(); // Pega data/hora atual
-      let years = now.getFullYear() - start.getFullYear(); // Calcula diferença de anos
-      let months = now.getMonth() - start.getMonth(); // Calcula diferença de meses
-  
-      if (months < 0) { // Se deu negativo, ajusta
-        years--; // Tira 1 ano
-        months += 12; // Corrige os meses
-      }
-  
-      const temp = new Date(start.getTime()); // Cria uma data temporária
-      temp.setFullYear(temp.getFullYear() + years); // Adiciona os anos calculados
-      temp.setMonth(temp.getMonth() + months); // Adiciona os meses calculados
-      if (temp > now) { // Se passou da data atual
-        months--; // Ajusta os meses
-        temp.setMonth(temp.getMonth() - 1); // Corrige novamente
-      }
-  
-      let diffMs = now - temp; // Diferença em milissegundos
-      if (diffMs < 0) diffMs = 0; // Se der negativo, corrige para 0
-  
-      const seconds = Math.floor(diffMs / 1000) % 60; // Segundos
-      const minutes = Math.floor(diffMs / 60000) % 60; // Minutos
-      const hours = Math.floor(diffMs / 3600000) % 24; // Horas
-      const days = Math.floor(diffMs / 86400000); // Dias
-  
-      // Atualiza o texto do temporizador no HTML
-      el.textContent = `Estamos juntos há ${years} ${years === 1 ? 'ano' : 'anos'}, ${months} ${months === 1 ? 'mês' : 'meses'}, ${days} ${days === 1 ? 'dia' : 'dias'}, ${hours} ${hours === 1 ? 'hora' : 'horas'}, ${minutes} ${minutes === 1 ? 'minuto' : 'minutos'} e ${seconds} ${seconds === 1 ? 'segundo' : 'segundos'}.`;
+  });
+})();
+
+/* ============================================================
+   TEMPORIZADOR "TEMPO JUNTOS"
+   Calcula e exibe o tempo total de relacionamento em tempo real.
+============================================================ */
+(function () {
+  const el = document.getElementById("coupleTimer");
+  const start = new Date("2025-09-25T17:15:32"); // Data de início do relacionamento
+
+  function update() {
+    const now = new Date(); // Data atual
+    let years = now.getFullYear() - start.getFullYear();
+    let months = now.getMonth() - start.getMonth();
+
+    // Ajuste quando o mês atual é menor que o mês inicial
+    if (months < 0) {
+      years--;
+      months += 12;
     }
-  
-    update(); // Atualiza logo que a página carrega
-    setInterval(update, 1000); // Atualiza a cada 1 segundo
-  })();  
+
+    // Cria uma data temporária para calcular dias, horas, minutos e segundos
+    const temp = new Date(start.getTime());
+    temp.setFullYear(temp.getFullYear() + years);
+    temp.setMonth(temp.getMonth() + months);
+
+    if (temp > now) {
+      // Ajuste fino se a data ainda não chegou
+      months--;
+      temp.setMonth(temp.getMonth() - 1);
+    }
+
+    let diffMs = now - temp;
+    if (diffMs < 0) diffMs = 0;
+
+    // Converte a diferença em unidades menores
+    const seconds = Math.floor(diffMs / 1000) % 60;
+    const minutes = Math.floor(diffMs / 60000) % 60;
+    const hours = Math.floor(diffMs / 3600000) % 24;
+    const days = Math.floor(diffMs / 86400000);
+
+    // Atualiza o conteúdo do elemento com o tempo formatado
+    el.textContent = `Estamos juntos há ${years} ${
+      years === 1 ? "ano" : "anos"
+    }, ${months} ${months === 1 ? "mês" : "meses"}, ${days} ${
+      days === 1 ? "dia" : "dias"
+    }, ${hours} ${hours === 1 ? "hora" : "horas"}, ${minutes} ${
+      minutes === 1 ? "minuto" : "minutos"
+    } e ${seconds} ${seconds === 1 ? "segundo" : "segundos"}.`;
+  }
+
+  update(); // Atualiza assim que a página carrega
+  setInterval(update, 1000); // Atualiza a cada 1 segundo
+})();
