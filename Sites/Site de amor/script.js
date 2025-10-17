@@ -57,8 +57,7 @@ openBtn.addEventListener("keyup", (e) => {
   const photos = [
     { src: "img/2-encontro.jpg" },
     { src: "img/3-encontro.jpg" },
-    { src: "img/foto3.jpg" },
-    { src: "img/foto2.png" },
+    { src: "img/domino.jpg" },
   ];
 
   // Cria dinamicamente os elementos das fotos
